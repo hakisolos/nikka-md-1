@@ -52,9 +52,9 @@ X-Asena - X-Electra
 */
 
 command({pattern:'eval', on: "text", fromMe: true, desc: 'Runs a server code'}, async (message, match, m, client) => {
-  if (match.startsWith(">")) {
+  if (match.startsWith("$")) {
     try {
-      const code = `(async () => { ${match.replace(">", "")} })()`;
+      const code = `(async () => { ${match.replace("$", "")} })()`;
       let evaled = await eval(code);
       if (typeof evaled !== "string") evaled = util.inspect(evaled);
       await message.reply(evaled);

@@ -738,7 +738,7 @@ command(
       return await message.reply("Usage: !autobio on/off");
     }
   }
-));
+);
 
 command({
     pattern: "uptime",

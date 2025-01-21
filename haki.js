@@ -206,40 +206,47 @@ conn.ev.on("group-participants.update", async (data) => {
         }
 
         events.commands.map(async (command) => {
-  try {
-    if (
-      command.fromMe && // Restriction for owner-only commands
-      !msg.isSelf && // Ensures the message is from the bot itself or the owner
-      !config.SUDO.includes(msg.sender?.split("@")[0]) // Allows users in the SUDO list
-    )
-      return;
+          if (
+  command.fromMe &&
+  !config.SUDO.includes(msg.sender?.split("@")[0] || !msg.isSelf)
+)
+            return;
 
-    let comman;
-    if (text_msg) {
-      comman = text_msg.trim().split(/ +/)[0];
-      msg.prefix = new RegExp(config.HANDLERS).test(text_msg)
-        ? text_msg.split("").shift()
-        : ",";
+          let comman;
+          if (text_msg) {
+            comman = text_msg.trim().split(/ +/)[0];
+            msg.prefix = new RegExp(config.HANDLERS).test(text_msg)
+              ? text_msg.split("").shift()
+              : ",";
+          }
+
+          if (command.pattern && command.pattern.test(comman)) {
+            var match;
+            try {
+              match = text_msg.replace(new RegExp(comman, "i"), "").trim();
+            } catch {
+              match = false;
+            }
+
+            whats = new Message(conn, msg, ms);
+            command.function(whats, match, msg, conn);
+          } else if (text_msg && command.on === "text") {
+            whats = new Message(conn, msg, ms);
+            command.function(whats, text_msg, msg, conn, m);
+          }
+        });
+      });
+    } catch (e) {
+      console.log(e.stack + "\n\n\n\n\n" + JSON.stringify(msg));
     }
+  });
 
-    if (command.pattern && command.pattern.test(comman)) {
-      var match;
-      try {
-        match = text_msg.replace(new RegExp(comman, "i"), "").trim();
-      } catch {
-        match = false;
-      }
-
-      whats = new Message(conn, msg, ms);
-      command.function(whats, match, msg, conn);
-    } else if (text_msg && command.on === "text") {
-      whats = new Message(conn, msg, ms);
-      command.function(whats, text_msg, msg, conn, m);
-    }
-  } catch (e) {
-    console.log(e.stack + "\n\n\n\n\n" + JSON.stringify(msg));
-  }
-});
+  process.on("uncaughtException", async (err) => {
+    //let error = err.message;
+    //console.log(err);
+    await conn.sendMessage(conn.user.id, { text: error });
+  });
+}
 
 setTimeout(() => {
   Abhiy();
