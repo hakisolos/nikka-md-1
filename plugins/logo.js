@@ -488,3 +488,41 @@ command(
     }
   }
 );
+
+command(
+    {
+        pattern: "carbon",
+        desc: "carbon img",
+        type: "misc",
+        fromMe: true,
+    },
+    async (message, match) => {
+        if (!match) {
+            return await message.reply("Provide text to carbonate.");
+        }
+
+        const url = `https://nikka-api.us.kg/tools/carbon?q=${encodeURIComponent(match)}&apiKey=nikka`;
+
+        try {
+            // React with "waiting" emoji to indicate processing
+            await message.react("⌛"); // You can change this to any emoji you'd like
+            console.log(`Attempting to generate carbon image with URL: ${url}`);
+
+            // Send the image URL
+            await message.sendFromUrl(url);
+
+            // React with "verified" emoji when image is sent successfully
+            await message.react("✅"); // Change to any emoji indicating success
+
+            // Wait for a short time, then remove all reactions
+            setTimeout(async () => {
+                await message.react(""); // Empty string removes all reactions
+            }, 1000); // You can adjust the time as needed (1000ms = 1 second)
+
+        } catch (error) {
+            console.error("Error generating carbon image:", error);
+            await message.reply("An error occurred while generating the carbon image.");
+        }
+    }
+);
+
