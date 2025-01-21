@@ -1,11 +1,11 @@
 {
-  "name": "shakaa",
-  "description": "shaka Multi Device whatsapp bot",
-  "logo": "https://i.imgur.com/Uc0uIkO.jpeg",
+  "name": "nikka-md",
+  "description": "nikka md Multi Device whatsapp bot",
+  "logo": "https://files.catbox.moe/lt53tx.jpg",
   "keywords": ["whatsapp"],
-  "repository": "https://github.com/your/repo",
-  "website": "https://github.com/your/repo",
-  "success_url": "https://github.com/your/repo",
+  "repository": "https://github.com/hakixer/nikka-md",
+  "website": "nikka-api.us.kg",
+  "success_url": "https://github.com/hakixer/nikka-md",
   "stack": "container",
   "env": {
     "SESSION_ID": {
@@ -19,22 +19,22 @@
      "AUDIO_DATA": {
       "description": "audio data , title;artist;image url",
       "required": "false",
-      "value": "shaka ; base ; https://i.imgur.com/Uc0uIkO.jpeg"
+      "value": "nikka ; hakixer ; https://files.catbox.moe/lt53tx.jpg"
      },
      "CAPTION": {
       "description": "enter your media caption",
       "required": "false",
-      "value": "shaka"
+      "value": "> POWERED BY NIKKA TECH"
     },
        "STICKER_DATA": {
-      "description": "Sticker pack name, eg : 𝗜𝗭𝗨𝗠𝗜 𝗫𝗗;𝐄𝐘𝐏𝐙",
+      "description": "Sticker pack name, eg : H4KI;XER",
       "required": "false",
-      "value": "shaka;base"
+      "value": "H4KI;XER"
     },
        "BOT_INFO": {
       "description": "Bot info : botname;ownername;imageurl - image or video",
       "required": "false",
-      "value": "shaka;haki;https://i.imgur.com/Uc0uIkO.jpeg"
+      "value": "nikka;haki;https://files.catbox.moe/lt53tx.jpg"
     },
      "ALWAYS_ONLINE": {
       "description": "Bot online online : true",
@@ -48,7 +48,7 @@
     "WORK_TYPE": {
       "description": "bot work mode",
       "required": "true",
-      "value": "private"
+      "value": "public"
      },
     "PREFIX": {
       "description": "Example 1: ^[.,!#]  example 2 ^ 👈🏻 Handlers disable",
