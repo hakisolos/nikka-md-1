@@ -1,1 +1,1 @@
-worker: node haki.js 
+worker: npm start
