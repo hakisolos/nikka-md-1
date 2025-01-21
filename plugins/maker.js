@@ -67,7 +67,7 @@ async function processMedia(message, apiUrlBase) {
 // Command implementation
 command(
   {
-    pattern: "wasted",
+    pattern: "8sted",
     desc: "Add a 'wasted' filter to your image.",
     fromMe: true,
     type: "image-processing",
@@ -91,6 +91,6 @@ command(
     } catch (error) {
       console.error("Error in 'wasted' command:", error);
       await message.reply(error);
-    }
-  }
+    }
+  }
 );
