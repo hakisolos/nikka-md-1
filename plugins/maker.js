@@ -12,7 +12,7 @@ async function uploadToCatbox(buffer) {
     const type = await fileType.fromBuffer(buffer);
     const ext = type ? type.ext : 'bin';
     const bodyForm = new FormData();
-    bodyForm.append("fileToUpload", buffer, file.${ext});
+    bodyForm.append("fileToUpload", buffer, `file.${ext}`);  // Corrected line
     bodyForm.append("reqtype", "fileupload");
 
     const res = await fetch("https://catbox.moe/user/api.php", {
@@ -21,7 +21,7 @@ async function uploadToCatbox(buffer) {
     });
 
     if (!res.ok) {
-      throw new Error(Upload to Catbox failed with status ${res.status}: ${res.statusText});
+      throw new Error(`Upload to Catbox failed with status ${res.status}: ${res.statusText}`);
     }
 
     const data = await res.text();
@@ -56,7 +56,7 @@ async function processMedia(message, apiUrlBase) {
     const catboxUrl = await uploadToCatbox(mediaBuffer);
 
     // Construct the API request URL
-    const apiUrl = ${apiUrlBase}${encodeURIComponent(catboxUrl)};
+    const apiUrl = `${apiUrlBase}${encodeURIComponent(catboxUrl)}`;
     return apiUrl;
   } catch (error) {
     console.error("Error processing media:", error);
