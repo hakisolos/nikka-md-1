@@ -15,7 +15,7 @@ command(
     const prefix = message.prefix;
     await git.fetch();
 
-    const commits = await git.log([main..origin/main]); // Changed master to main
+    const commits = await git.log([main.origin/main]); // Changed master to main
     if (!match) {
       if (commits.total === 0) {
         return await message.reply('No update available');
