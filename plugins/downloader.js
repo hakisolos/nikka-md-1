@@ -174,7 +174,7 @@ _Downloading the file. This may take some time._
 );
 command(
     {
-        pattern: "play",
+        pattern: "rwfw",
         desc: "Downloading media",
         type: "downloader",
         fromMe: isPrivate,
