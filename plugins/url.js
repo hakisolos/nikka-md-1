@@ -11,7 +11,7 @@ async function uploadMedia(buffer) {
     const type = await fileType.fromBuffer(buffer);
     const ext = type ? type.ext : 'bin';
     const bodyForm = new FormData();
-    bodyForm.append("fileToUpload", buffer, file.${ext});
+    bodyForm.append("fileToUpload", buffer, `file.${ext}`);  // Corrected string interpolation
     bodyForm.append("reqtype", "fileupload");
 
     const res = await fetch("https://catbox.moe/user/api.php", {
@@ -20,7 +20,7 @@ async function uploadMedia(buffer) {
     });
 
     if (!res.ok) {
-      throw new Error(Upload failed with status ${res.status}: ${res.statusText});
+      throw new Error(`Upload failed with status ${res.status}: ${res.statusText}`);  // Corrected string interpolation
     }
 
     const data = await res.text();
@@ -37,7 +37,7 @@ async function handleMediaUpload(message) {
     const fileSizeMB = mediaBuffer.length / (1024 * 1024);
 
     if (fileSizeMB > MAX_FILE_SIZE_MB) {
-      return File size exceeds the limit of ${MAX_FILE_SIZE_MB}MB.;
+      return `File size exceeds the limit of ${MAX_FILE_SIZE_MB}MB.`;  // Corrected string interpolation
     }
 
     const mediaUrl = await uploadMedia(mediaBuffer);
@@ -71,7 +71,7 @@ command(
       const mediaUrl = await handleMediaUpload(message.reply_message);
 
       if (mediaUrl.startsWith("http")) {
-        await message.reply(Media uploaded successfully: ${mediaUrl});
+        await message.reply(`Media uploaded successfully: ${mediaUrl}`);  // Corrected string interpolation
       } else {
         await message.reply(mediaUrl);
       }
