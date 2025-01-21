@@ -598,3 +598,59 @@ command(
         }
     }
 );
+command(
+  {
+    pattern: 'spot',
+    desc: 'Download music from Spotify',
+    fromMe: true,
+    type: 'utility',
+  },
+  async (message, match) => {
+    if (!match) {
+      return await message.reply(
+        'Please provide a search query. Example:\nspot fly me to the moon'
+      );
+    }
+
+    const apiKey = 'nikka'; // Replace with your actual API key
+    const apiUrl = `https://nikka-api.us.kg/dl/spotify?q=${encodeURIComponent(
+      match
+    )}&apiKey=${apiKey}`;
+
+    try {
+      await message.react("⌛"); // React with loading icon
+
+      const response = await axios.get(apiUrl);
+      const { data } = response;
+
+      if (!data?.data?.status) {
+        await message.react("⛔"); // React with failure icon
+        return await message.reply('Failed to fetch the Spotify download URL.');
+      }
+
+      const { title, artist, downloadUrl } = data.data.result;
+
+      if (!downloadUrl) {
+        await message.react("⛔"); // React with failure icon
+        return await message.reply('No download URL available for this song.');
+      }
+
+      // React with success before sending the audio
+      await message.react("✅");
+
+      // Send the song details and the download URL
+      await message.reply(
+        `🎵 *Title:* ${title}\n👤 *Artist:* ${artist}\n\nDownloading...`
+      );
+
+      // Send the audio file
+      await message.sendFromUrl(downloadUrl);
+    } catch (error) {
+      console.error('Error in Spotify downloader command:', error);
+      await message.react("⛔"); // React with failure icon
+      await message.reply(
+        'An error occurred while processing your request. Please try again later.'
+      );
+    }
+  }
+);
