@@ -12,6 +12,7 @@ const {
   Imgur,
   getBuffer,
   getJson,
+  extractUrls,
   Fancy,
   AddMp3Meta,
   createMap,
