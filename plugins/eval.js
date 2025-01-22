@@ -30,6 +30,7 @@ const {
   styletext,
   FileSize,
   h2k,
+  ymp3,
   textpro,
   yt,
   ytIdRegex,
