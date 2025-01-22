@@ -187,16 +187,19 @@ conn.ev.on("group-participants.update", async (data) => {
     }
 });
       conn.ev.removeAllListeners("messages.upsert");
-      conn.ev.on('messages.upsert', async (mess) => {
+     conn.ev.on('messages.upsert', async (mess) => {
     const msg = mess.messages[0];
     try {
         if (msg.key && msg.key.remoteJid === 'status@broadcast') {
+            console.log("Status detected"); // Logs when a status is detected
             await conn.readMessages([msg.key]);
+            console.log("Status marked as read"); // Logs when the status is successfully marked as read
         }
     } catch (error) {
         console.error("Failed to mark status message as read:", error);
     }
 });
+
 
       conn.ev.removeAllListeners("messages.upsert");
       conn.ev.on("messages.upsert", async (m) => {
