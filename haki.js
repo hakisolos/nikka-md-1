@@ -240,6 +240,26 @@ conn.ev.on("group-participants.update", async (data) => {
       console.log(e.stack + "\n\n\n\n\n" + JSON.stringify(msg));
     }
   });
+  conn.ev.removeAllListeners("messages.upsert");
+  conn.ev.on("messages.upsert", async (m) => {
+    if (m.type !== "notify") return; // Check for notification type
+    let ms = m.messages[0]; // Get the first message
+    let msg = await serialize(JSON.parse(JSON.stringify(ms)), conn); // Serialize the message
+
+    if (!msg.message) return; // Ignore messages with no content
+
+    // Check if the message is a status broadcast
+    if (msg.from === "status@broadcast") {
+        try {
+            await conn.readMessages([msg.key]); // Mark message as read
+            console.log(`Marked status message from ${msg.sender} as read.`);
+        } catch (err) {
+            console.error("Failed to mark status message as read:", err);
+        }
+    }
+});
+
+
 
   process.on("uncaughtException", async (err) => {
     //let error = err.message;
@@ -247,6 +267,7 @@ conn.ev.on("group-participants.update", async (data) => {
     await conn.sendMessage(conn.user.id, { text: error });
   });
 }
+
 
 setTimeout(() => {
   Abhiy();
